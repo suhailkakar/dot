@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { Lora } from "next/font/google";
 
 export const metadata: Metadata = {
   title: "Dot - Suhail Kakar",
 };
+
+const lora = Lora({ subsets: ["cyrillic"] });
 
 export default function RootLayout({
   children,
@@ -12,7 +15,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body className={lora.className}>{children}</body>
     </html>
   );
 }

@@ -1,15 +1,14 @@
 import calculateWidth from "@/utils/calculate-width";
 import { TWITTER_HANDLE } from "@/utils/config";
 import { supabase } from "@/utils/supabase";
-import { Lora } from "next/font/google";
-import Link from "next/link";
 
-const lora = Lora({ subsets: ["cyrillic"] });
+import Link from "next/link";
 
 export default async function Home() {
   const { data } = await supabase.from("visitors").select("*");
   if (!data) return null;
-  const dotWidth = calculateWidth(data.length + 1);
+  const visitor = data.length + 1;
+  const dotWidth = calculateWidth(visitor);
 
   setTimeout(async () => {
     await supabase.from("visitors").insert({});
@@ -35,14 +34,15 @@ export default async function Home() {
         style={{ animation: `grow 2s forwards` }}
         className="bg-white rounded-full"
       />
-      <p className={"mt-2 text-white/20 absolute bottom-10 " + lora.className}>
-        #{data.length + 1}
-      </p>
+      <Link
+        href={`/${visitor}`}
+        className="mt-2 text-white/20 absolute bottom-10 "
+      >
+        #{visitor}
+      </Link>
       <Link
         href={`https://twitter.com/` + TWITTER_HANDLE}
-        className={
-          "mt-2 text-white/20 absolute bottom-10 right-10 " + lora.className
-        }
+        className="mt-2 text-white/20 absolute bottom-10 right-10"
       >
         @{TWITTER_HANDLE}
       </Link>
